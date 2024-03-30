@@ -14,6 +14,9 @@ public class TiposPrimitivosAula02 {
         char caractere = 'M';
         char caractere2 = 15;
 
+        String nome = "Goku";
+        var nome2 = "Vegeta";
+
         System.out.println(idade);
         System.out.println(numeroGrande);
         System.out.println(salarioDouble);
@@ -24,7 +27,8 @@ public class TiposPrimitivosAula02 {
         System.out.println(falso);
         System.out.println(caractere);
         System.out.println(caractere2);
-
+        System.out.println("Oi meu nome é " + nome);
+        System.out.println("Oi meu nome é " + nome2);
         System.out.println("A idade é: " + idade + " anos");
         System.out.println("idade");
     }
