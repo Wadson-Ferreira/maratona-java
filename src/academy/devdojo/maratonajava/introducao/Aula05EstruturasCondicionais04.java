@@ -1,7 +1,9 @@
 package academy.devdojo.maratonajava.introducao;
-//salario < 34713 eu pago 9.70% taxa
-//salario >=34713 && <=68507 eu pago 37.35%
-//salario >=68508 taxa de 49.50%
+/** Dado um determinado salário, qual o valor de imposto tenho que pagar?
+ De 0 até 34.712 tem que pagar 9.70%
+ De 34.713 até 68.507 tem que pagar 37.35%
+ De 68.508 para cima tem que pagar 49.50%
+ */
 public class Aula05EstruturasCondicionais04 {
     public static void main(String[] args) {
         double salarioAnual = 70000;
