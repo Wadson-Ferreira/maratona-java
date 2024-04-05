@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Calcule a média das notas;
  * Exiba média das notas.
  */
-public class Aula07Exercício {
+public class Aula07Exercicio {
     public static void main(String[] args) {
 
         Scanner entrada = new Scanner(System.in);
