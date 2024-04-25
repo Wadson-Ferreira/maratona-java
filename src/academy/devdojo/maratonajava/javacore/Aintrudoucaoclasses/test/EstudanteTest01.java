@@ -1,6 +1,6 @@
-package academy.devdojo.maratonajava.javacore.intrudoucaoclasses.test;
+package academy.devdojo.maratonajava.javacore.Aintrudoucaoclasses.test;
 
-import academy.devdojo.maratonajava.javacore.intrudoucaoclasses.dominio.Estudante;
+import academy.devdojo.maratonajava.javacore.Aintrudoucaoclasses.dominio.Estudante;
 
 public class EstudanteTest01 {
     public static void main(String[] args) {
