@@ -1,4 +1,4 @@
-package academy.devdojo.maratonajava.javacore.Rdate.test;
+package academy.devdojo.maratonajava.javacore.Sformatacao.test;
 
 import java.text.DateFormat;
 import java.util.Calendar;
