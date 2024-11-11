@@ -2,6 +2,7 @@ package academy.devdojo.maratonajava.javacore.Rdate.test;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 public class PeriodTest01 {
     public static void main(String[] args) {
@@ -14,7 +15,7 @@ public class PeriodTest01 {
         Period p2 = Period.ofDays(10);
         System.out.println("p2 " + p2);
 
-        Period p3 = Period.ofWeeks(2);
+        Period p3 = Period.ofWeeks(58);
         System.out.println("p3 " + p3);
 
         Period p4 = Period.ofMonths(2);
@@ -30,7 +31,13 @@ public class PeriodTest01 {
         //aqui por exemplo o retorno é 0 pq o código converte direto para
         // dias sem apresentar a quantidade de meses.
 
-        System.out.println(Period.between(LocalDate.now(),
-                LocalDate.now().plusDays(p3.getDays())));
+        System.out.println(Period.between(now, now.plusDays(p3.getDays())).getMonths());
+
+        System.out.println(now.until(now.plusDays(p3.getDays()), ChronoUnit.MONTHS));
+        System.out.println(now.until(now.plusDays(p3.getDays()), ChronoUnit.YEARS));
+        System.out.println(now.until(now.plusDays(p3.getDays()),
+                ChronoUnit.HOURS));
+        //Hours não funcionou pois now está utilizando a classe LocalDate e
+        // não a LocalDateTime
     }
 }
