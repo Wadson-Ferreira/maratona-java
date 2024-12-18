@@ -1,0 +1,5 @@
+Hello WorldHello WorldHello World
+ Ao adicionar o append ele ira apenas adicionar mais texto ao arquivo
+ Sem o append ele excluir o arquivo e cria um novoHello World
+ Ao adicionar o append ele ira apenas adicionar mais texto ao arquivo
+ Sem o append ele excluir o arquivo e cria um novo
