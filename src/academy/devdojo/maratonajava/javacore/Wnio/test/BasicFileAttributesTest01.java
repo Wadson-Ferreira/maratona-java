@@ -12,6 +12,7 @@ import java.time.ZoneOffset;
 public class BasicFileAttributesTest01 {
     public static void main(String[] args) throws IOException {
         //BasicFileAttributes, PosixFileAttributes, DosFileAttributes
+        //Foram criadas para trabalhar com diferentes sistemas operacionais.
         LocalDateTime date = LocalDateTime.now().minusDays(10);
         File file = new File("Arquivos/novo.txt");
         System.out.println(file.createNewFile());
