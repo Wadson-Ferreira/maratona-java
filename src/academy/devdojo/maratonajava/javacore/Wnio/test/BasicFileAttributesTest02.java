@@ -10,7 +10,7 @@ import java.nio.file.attribute.FileTime;
 
 public class BasicFileAttributesTest02 {
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("Arquivos/novo_path.txt");
+        Path path = Paths.get("Arquivos/subsubarquivo1.txt");
         BasicFileAttributes basicFileAttributes = Files.readAttributes(path, BasicFileAttributes.class);
         FileTime creationTime = basicFileAttributes.creationTime();
         FileTime lastAccessTime = basicFileAttributes.lastAccessTime();

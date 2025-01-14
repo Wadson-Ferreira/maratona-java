@@ -14,14 +14,14 @@ public class BasicFileAttributesTest01 {
         //BasicFileAttributes, PosixFileAttributes, DosFileAttributes
         //Foram criadas para trabalhar com diferentes sistemas operacionais.
         LocalDateTime date = LocalDateTime.now().minusDays(10);
-        File file = new File("Arquivos/novo.txt");
+        File file = new File("Arquivos/subArquivo2.txt");
         System.out.println(file.createNewFile());
         boolean isModified = file.setLastModified(date.toInstant(ZoneOffset.UTC).toEpochMilli());
         System.out.println(isModified);
 
         //Forma antiga acima
 
-        Path path = Paths.get("Arquivos/novo_path.txt");
+        Path path = Paths.get("Arquivos/subsubarquivo1.txt");
         Files.createFile(path);
         FileTime fileTime = FileTime.from(date.toInstant(ZoneOffset.UTC));
         Files.setLastModifiedTime(path, fileTime);
