@@ -8,8 +8,8 @@ public class Manga {
     private double preco;
 
     public Manga(Long id, String titulo, double preco) {
-        Objects.requireNonNull(id);
-        Objects.requireNonNull(titulo);
+        Objects.requireNonNull(id,"Id não pode ser null");
+        Objects.requireNonNull(titulo,"Titulo não pode ser null");
         this.id = id;
         this.titulo = titulo;
         this.preco = preco;
