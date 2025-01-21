@@ -3,7 +3,7 @@ package academy.devdojo.maratonajava.javacore.XSerializacao.dominio;
 import java.io.*;
 
 public class Aluno implements Serializable {
-    @Serial
+
     private static final long serialVersionUID = 146715097433467036L;
 
     private Long id;
@@ -19,7 +19,6 @@ public class Aluno implements Serializable {
         this.password = password;
     }
 
-    @Serial
     private void writeObject(ObjectOutputStream oos){
         try{
             oos.defaultWriteObject();
@@ -29,7 +28,6 @@ public class Aluno implements Serializable {
         }
     }
 
-    @Serial
     private void readObject(ObjectInputStream ois){
         try{
             ois.defaultReadObject();
