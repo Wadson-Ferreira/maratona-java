@@ -14,4 +14,8 @@ public class Barco {
                 '}';
 
     }
+
+    public String getNome() {
+        return nome;
+    }
 }
