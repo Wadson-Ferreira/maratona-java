@@ -34,5 +34,6 @@ public class StreamTest13 {
                     return ln.getPreco() < 6 ? Promocao.EM_PROMOCAO : Promocao.PRECO_NORMAL;
                 })));
         System.out.println(collect1);
+
     }
 }
