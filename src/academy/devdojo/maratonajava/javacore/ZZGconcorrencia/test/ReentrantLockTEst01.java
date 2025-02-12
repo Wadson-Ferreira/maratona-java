@@ -14,22 +14,28 @@ class Trabalhador implements Runnable {
 
     @Override
     public void run() {
-        lock.lock();
+
         try {
-            if(lock.isHeldByCurrentThread()){
-                System.out.printf("Thread %s entrou em uma sessão crítica%n",nome);
-                System.out.printf("Thread %s vai esperar 2%n",nome);
-                Thread.sleep(2000);
-                System.out.printf("Thread %s finalizou a espera 2%n",nome);
+            lock.tryLock();
+            if(lock.isHeldByCurrentThread()) {
+                System.out.printf("Thread %s pegou o Lock%n", nome);
             }
+            System.out.printf("Thread %s entrou em uma sessão crítica%n", nome);
+            System.out.printf("Thread %s vai esperar 2%n", nome);
+            Thread.sleep(2000);
+            System.out.printf("Thread %s finalizou a espera 2%n", nome);
+
             System.out.printf("%d Threads esperando na fila%n", lock.getQueueLength());
         } catch (InterruptedException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         } finally {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 }
+
 public class ReentrantLockTEst01 {
     public static void main(String[] args) {
         ReentrantLock lock = new ReentrantLock();
