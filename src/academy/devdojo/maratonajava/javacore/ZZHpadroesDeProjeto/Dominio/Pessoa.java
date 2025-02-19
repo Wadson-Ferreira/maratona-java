@@ -1,10 +1,10 @@
 package academy.devdojo.maratonajava.javacore.ZZHpadroesDeProjeto.Dominio;
 
 public class Pessoa {
-    private String primeiroNome;
-    private String sobrenome;
-    private String apelido;
-    private String email;
+    private final String primeiroNome;
+    private final String sobrenome;
+    private final String apelido;
+    private final String email;
 
     private Pessoa(String primeiroNome, String sobrenome, String apelido, String email) {
         this.primeiroNome = primeiroNome;
@@ -33,7 +33,7 @@ public class Pessoa {
         private PessoaBuilder() {
         }
 
-        public static PessoaBuilder aPessoa() {
+        public static PessoaBuilder builder() {
             return new PessoaBuilder();
         }
 
