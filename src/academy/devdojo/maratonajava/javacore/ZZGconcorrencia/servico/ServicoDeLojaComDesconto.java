@@ -28,7 +28,8 @@ public class ServicoDeLojaComDesconto {
 
     private void atraso() {
         try {
-            TimeUnit.SECONDS.sleep(1);
+            int milli = ThreadLocalRandom.current().nextInt(200, 2500);
+            TimeUnit.MILLISECONDS.sleep(milli);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
