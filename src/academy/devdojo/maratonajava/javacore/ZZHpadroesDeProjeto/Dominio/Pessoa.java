@@ -23,6 +23,13 @@ public class Pessoa {
                 '}';
     }
 
+    public String getPrimeiroNome() {
+        return primeiroNome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
 
     public static final class PessoaBuilder {
         private String primeiroNome;

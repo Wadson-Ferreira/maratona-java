@@ -11,6 +11,10 @@ public final class Aeronave {
         this.nome = nome;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     {
         assentosDisponiveis.add("1A");
         assentosDisponiveis.add("1B");
