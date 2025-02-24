@@ -9,10 +9,19 @@ public class ProdutorServico {
         ProdutorRepositorio.salvar(produtor);
     }
 
-    public static void deletar(int id) {
-        if(id <= 0){
+    public static void deletar(Integer id) {
+        validandoID(id);
+        ProdutorRepositorio.deletar(id);
+    }
+
+    public static void atualizar (Produtor produtor) {
+        validandoID(produtor.getId());
+        ProdutorRepositorio.atualizar(produtor);
+    }
+
+    private static void validandoID(Integer id) {
+        if(id == null || id <= 0){
             throw new IllegalArgumentException("Valor de id invalido, o valor deve ser maior que 0");
         }
-        ProdutorRepositorio.deletar(id);
     }
 }

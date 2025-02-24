@@ -8,8 +8,10 @@ import lombok.extern.log4j.Log4j2;
 public class ConnectionFactoryTest01 {
     public static void main(String[] args) {
         Produtor produtor = Produtor.builder().nome("Studio Deen").build();
-      //  ProdutorServico.salvar(produtor);
+        Produtor atualizarProdutor = Produtor.builder().id(1).nome("MADHOUSE").build();
+        ProdutorServico.salvar(produtor);
         ProdutorServico.deletar(9);
+        ProdutorServico.atualizar(atualizarProdutor);
 
 
     }
