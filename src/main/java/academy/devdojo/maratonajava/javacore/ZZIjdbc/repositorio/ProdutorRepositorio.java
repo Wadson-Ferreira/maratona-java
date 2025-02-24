@@ -12,12 +12,25 @@ import java.sql.Statement;
 public class ProdutorRepositorio {
     public static void salvar(Produtor produtor) {
         String sql = "INSERT INTO `anime_loja`.`produtor` (`nome`) VALUES ('%s');".formatted(produtor.getNome());
-        try(Connection conn = ConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement()){
-            int executed = stmt.executeUpdate(sql);
-            log.info("Inserindo Linhas no banco de dados, linhas afetadas '{}'", executed);
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement()) {
+            int linhasAfetadas = stmt.executeUpdate(sql);
+            log.info("Inserindo produtor '{}' no banco de dados, linhas afetadas '{}'", produtor.getNome(), linhasAfetadas);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Erro ao inserir produtor'{}'", produtor.getNome(), e);
+        }
+    }
+
+    public static void deletar(int id) {
+        String sql = "DELETE FROM `anime_loja`.`produtor` WHERE (`idProdutor` = '%d');".formatted(id);
+        try(Connection conn = ConnectionFactory.getConnection();
+        Statement stmt = conn.createStatement()){
+            int linhasAfetadas = stmt.executeUpdate(sql);
+            log.info("Deletando produtor '{}' do banco de dados, linhas afetadas '{}' ", id, linhasAfetadas);
+        } catch (SQLException e) {
+            log.error("Erro ao deletar produtor '{}'", id, e);
         }
     }
 }
+
+
