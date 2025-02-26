@@ -5,8 +5,11 @@ import academy.devdojo.maratonajava.javacore.ZZIjdbc.dominio.Produtor;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 public class ProdutorRepositorio {
@@ -42,6 +45,25 @@ public class ProdutorRepositorio {
         } catch (SQLException e) {
             log.error("Erro ao atualizar produtor '{}'", produtor.getId(), e);
         }
+    }
+
+    public static List<Produtor>  procurarTodos () {
+        log.info("Buscando todos os Produtores");
+        String sql = "SELECT idProdutor, nome FROM anime_loja.produtor;";
+        List<Produtor> produtores = new ArrayList<>();
+        try(Connection conn = ConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
+            while (rs.next()) {
+                int idProdutor = rs.getInt("idProdutor");
+                String nome = rs.getString("nome");
+                Produtor produtor = Produtor.builder().id(idProdutor).nome(nome).build();
+                produtores.add(produtor);
+            }
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtores ", e);
+        }
+        return produtores;
     }
 }
 
