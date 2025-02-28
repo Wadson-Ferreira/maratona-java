@@ -15,8 +15,7 @@ import java.util.List;
 public class ProdutorRepositorio {
     public static void salvar(Produtor produtor) {
         String sql = "INSERT INTO `anime_loja`.`produtor` (`nome`) VALUES ('%s');".formatted(produtor.getNome());
-        try (Connection conn = ConnectionFactory.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement()) {
             int linhasAfetadas = stmt.executeUpdate(sql);
             log.info("Inserindo produtor '{}' no banco de dados, linhas afetadas '{}'", produtor.getNome(), linhasAfetadas);
         } catch (SQLException e) {
@@ -26,8 +25,7 @@ public class ProdutorRepositorio {
 
     public static void deletar(int id) {
         String sql = "DELETE FROM `anime_loja`.`produtor` WHERE (`idProdutor` = '%d');".formatted(id);
-        try(Connection conn = ConnectionFactory.getConnection();
-        Statement stmt = conn.createStatement()){
+        try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement()) {
             int linhasAfetadas = stmt.executeUpdate(sql);
             log.info("Deletando produtor '{}' do banco de dados, linhas afetadas '{}' ", id, linhasAfetadas);
         } catch (SQLException e) {
@@ -35,11 +33,9 @@ public class ProdutorRepositorio {
         }
     }
 
-    public static void atualizar (Produtor produtor) {
-        String sql = "UPDATE `anime_loja`.`produtor` SET `nome` = '%s' WHERE (`idProdutor` = '%d');"
-                .formatted(produtor.getNome(), produtor.getId());
-        try(Connection conn = ConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement()){
+    public static void atualizar(Produtor produtor) {
+        String sql = "UPDATE `anime_loja`.`produtor` SET `nome` = '%s' WHERE (`idProdutor` = '%d');".formatted(produtor.getNome(), produtor.getId());
+        try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement()) {
             int linhasAfetadas = stmt.executeUpdate(sql);
             log.info("atualizando produtor id: '{}', linhas afetadas '{}' ", produtor.getId(), linhasAfetadas);
         } catch (SQLException e) {
@@ -47,21 +43,28 @@ public class ProdutorRepositorio {
         }
     }
 
-    public static List<Produtor>  procurarTodos () {
+    public static List<Produtor> procurarTodos() {
         log.info("Buscando todos os Produtores");
-        String sql = "SELECT idProdutor, nome FROM anime_loja.produtor;";
+        return procurarPorNome("");
+    }
+
+    public static List<Produtor> procurarPorNome(String nome) {
+        log.info("Buscando Produtores pelo nome: '{}'", nome);
+        String sql = "SELECT * FROM anime_loja.produtor where nome like '%s';".formatted("%" + nome + "%");
         List<Produtor> produtores = new ArrayList<>();
-        try(Connection conn = ConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)){
+        try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                int idProdutor = rs.getInt("idProdutor");
-                String nome = rs.getString("nome");
-                Produtor produtor = Produtor.builder().id(idProdutor).nome(nome).build();
+                Produtor produtor = Produtor
+                        .builder()
+                        .id(rs.getInt("idProdutor"))
+                        .nome(rs.getString("nome"))
+                        .build();
                 produtores.add(produtor);
             }
 
         } catch (SQLException e) {
-            log.error("Erro ao buscar produtores ", e);
+            log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
         }
         return produtores;
     }
