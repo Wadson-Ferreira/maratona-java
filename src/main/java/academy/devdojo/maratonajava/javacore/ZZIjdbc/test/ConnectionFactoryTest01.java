@@ -9,17 +9,15 @@ import java.util.List;
 @Log4j2
 public class ConnectionFactoryTest01 {
     public static void main(String[] args) {
-       // Produtor produtor = Produtor.builder().nome("Studio Deen").build();
-        Produtor atualizarProdutor = Produtor.builder().id(1).nome("MADHOUSE").build();
-        //ProdutorServico.salvar(produtor);
-        //ProdutorServico.deletar(9);
-        //ProdutorServico.atualizar(atualizarProdutor);
-        List<Produtor> produtores = ProdutorServico.procurarTodos();
-        //List<Produtor> produtores = ProdutorServico.procurarPorNome("MADHOUSE");
+//        Produtor produtor = Produtor.builder().nome("Studio Deen").build();
+//        Produtor atualizarProdutor = Produtor.builder().id(1).nome("MADHOUSE").build();
+//        ProdutorServico.salvar(produtor);
+//        ProdutorServico.deletar(9);
+//        ProdutorServico.atualizar(atualizarProdutor);
+//        List<Produtor> produtores = ProdutorServico.procurarTodos();
+//        List<Produtor> produtores = ProdutorServico.procurarPorNome("MADHOUSE");
+//        log.info("Produtor encontrado '{}'", produtores);
 
-
-        log.info("Produtor encontrado '{}'", produtores);
-
-
+        ProdutorServico.metadaDadosProdutor();
     }
 }

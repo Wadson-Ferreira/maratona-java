@@ -29,6 +29,10 @@ public class ProdutorServico {
         return ProdutorRepositorio.procurarPorNome(nome);
     }
 
+    public static void metadaDadosProdutor () {
+        ProdutorRepositorio.metadaDadosProdutor();
+    }
+
     private static void validandoID(Integer id) {
         if(id == null || id <= 0){
             throw new IllegalArgumentException("Valor de id invalido, o valor deve ser maior que 0");

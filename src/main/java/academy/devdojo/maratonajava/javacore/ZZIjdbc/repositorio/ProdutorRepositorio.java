@@ -4,10 +4,7 @@ import academy.devdojo.maratonajava.javacore.ZZIjdbc.conn.ConnectionFactory;
 import academy.devdojo.maratonajava.javacore.ZZIjdbc.dominio.Produtor;
 import lombok.extern.log4j.Log4j2;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +64,27 @@ public class ProdutorRepositorio {
             log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
         }
         return produtores;
+    }
+
+    public static void metadaDadosProdutor()  {
+        log.info("Mostrando metadados dados do Produtor");
+        String sql = "SELECT * FROM anime_loja.produtor";
+        try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            rs.next();
+            int columnCount = rs.getMetaData().getColumnCount();
+            log.info("Contagens de Colunas '{}'", columnCount);
+            for (int i = 1; i <= columnCount; i++) {
+                log.info("Nome da tabela: '{}'", rsMetaData.getTableName(i));
+                log.info("Nome da coluna: '{}'", rsMetaData.getColumnName(i));
+                log.info("Tamanho da coluna: '{}'", rsMetaData.getColumnDisplaySize(i));
+                log.info("Tipo de coluna: '{}'", rsMetaData.getColumnTypeName(i));
+            }
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar metadados", e);
+        }
     }
 }
 
