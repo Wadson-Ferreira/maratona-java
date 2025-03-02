@@ -66,13 +66,12 @@ public class ProdutorRepositorio {
         return produtores;
     }
 
-    public static void metadaDadosProdutor()  {
+    public static void metaDadosDoProdutor()  {
         log.info("Mostrando metadados dados do Produtor");
         String sql = "SELECT * FROM anime_loja.produtor";
         try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             ResultSetMetaData rsMetaData = rs.getMetaData();
-            rs.next();
             int columnCount = rs.getMetaData().getColumnCount();
             log.info("Contagens de Colunas '{}'", columnCount);
             for (int i = 1; i <= columnCount; i++) {
@@ -82,6 +81,35 @@ public class ProdutorRepositorio {
                 log.info("Tipo de coluna: '{}'", rsMetaData.getColumnTypeName(i));
             }
 
+        } catch (SQLException e) {
+            log.error("Erro ao buscar metadados", e);
+        }
+    }
+
+    public static void driverMetaDadosDoProdutor()  {
+        log.info("Mostrando metadados dados do Produtor");
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            DatabaseMetaData dbMetaData = conn.getMetaData();
+            if(dbMetaData.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY)) {
+                log.info("Suporta TYPE_FORWARD_ONLY");
+                if(dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)){
+                    log.info("E Suporta CONCUR_UPDATABLE");
+                }
+            }
+
+            if(dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)) {
+                log.info("Suporta TYPE_SCROLL_INSENSITIVE");
+                if(dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
+                    log.info("E Suporta CONCUR_UPDATABLE");
+                }
+            }
+
+            if(dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE)) {
+                log.info("Suporta TYPE_SCROLL_SENSITIVE");
+                if(dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)){
+                    log.info("E Suporta CONCUR_UPDATABLE");
+                }
+            }
         } catch (SQLException e) {
             log.error("Erro ao buscar metadados", e);
         }

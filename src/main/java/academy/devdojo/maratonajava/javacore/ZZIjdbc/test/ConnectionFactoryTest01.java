@@ -18,6 +18,7 @@ public class ConnectionFactoryTest01 {
 //        List<Produtor> produtores = ProdutorServico.procurarPorNome("MADHOUSE");
 //        log.info("Produtor encontrado '{}'", produtores);
 
-        ProdutorServico.metadaDadosProdutor();
+//        ProdutorServico.metadaDadosProdutor();
+          ProdutorServico.driverMetaDadosDoProdutor();
     }
 }

@@ -30,7 +30,11 @@ public class ProdutorServico {
     }
 
     public static void metadaDadosProdutor () {
-        ProdutorRepositorio.metadaDadosProdutor();
+        ProdutorRepositorio.metaDadosDoProdutor();
+    }
+
+    public static void driverMetaDadosDoProdutor () {
+        ProdutorRepositorio.driverMetaDadosDoProdutor();
     }
 
     private static void validandoID(Integer id) {
