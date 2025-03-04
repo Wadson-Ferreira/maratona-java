@@ -19,6 +19,7 @@ public class ConnectionFactoryTest01 {
 //        log.info("Produtor encontrado '{}'", produtores);
 
 //        ProdutorServico.metadaDadosProdutor();
-          ProdutorServico.driverMetaDadosDoProdutor();
+//        ProdutorServico.driverMetaDadosDoProdutor();
+          ProdutorServico.mostrarTypeScrollTrabalhando();
     }
 }

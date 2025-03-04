@@ -37,6 +37,10 @@ public class ProdutorServico {
         ProdutorRepositorio.driverMetaDadosDoProdutor();
     }
 
+    public static void mostrarTypeScrollTrabalhando (){
+        ProdutorRepositorio.mostrarTypeScrollTrabalhando();
+    }
+
     private static void validandoID(Integer id) {
         if(id == null || id <= 0){
             throw new IllegalArgumentException("Valor de id invalido, o valor deve ser maior que 0");

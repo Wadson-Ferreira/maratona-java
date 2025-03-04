@@ -114,6 +114,40 @@ public class ProdutorRepositorio {
             log.error("Erro ao buscar metadados", e);
         }
     }
+
+    public static void mostrarTypeScrollTrabalhando () {
+        String sql = "SELECT * FROM anime_loja.produtor;";
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)){
+
+            log.info("Ultima linha? '{}'", rs.last());
+            log.info("Número da linha: '{}'", rs.getRow());
+            log.info(Produtor.builder().id(rs.getInt("idProdutor")).nome(rs.getString("nome")).build());
+
+            log.info("Primeira linha? '{}'", rs.first());
+            log.info("Número da linha: '{}'", rs.getRow());
+            log.info(Produtor.builder().id(rs.getInt("idProdutor")).nome(rs.getString("nome")).build());
+
+            log.info("Linha Absolute? '{}'", rs.absolute(2));
+            log.info("Número da linha: '{}'", rs.getRow());
+            log.info(Produtor.builder().id(rs.getInt("idProdutor")).nome(rs.getString("nome")).build());
+
+            log.info("Linha Relative '{}'", rs.relative(-1));
+            log.info("Número da linha: '{}'", rs.getRow());
+            log.info(Produtor.builder().id(rs.getInt("idProdutor")).nome(rs.getString("nome")).build());
+
+            log.info("E a Última linha? '{}'", rs.isLast());
+            log.info("Número da linha: '{}'", rs.getRow());
+
+            log.info("E a Primeira linha? '{}'", rs.isFirst());
+            log.info("Número da linha: '{}'", rs.getRow());
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtores", e);
+        }
+
+    }
 }
 
 
