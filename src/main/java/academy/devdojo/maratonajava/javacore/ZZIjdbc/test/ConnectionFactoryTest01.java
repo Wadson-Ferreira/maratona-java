@@ -20,6 +20,7 @@ public class ConnectionFactoryTest01 {
 
 //        ProdutorServico.metadaDadosProdutor();
 //        ProdutorServico.driverMetaDadosDoProdutor();
-          ProdutorServico.mostrarTypeScrollTrabalhando();
+        List<Produtor> prodotures = ProdutorServico.procurarPorNomeEAtualizarToUpperCase("Deen");
+        log.info("Produtores pelo nome: '{}'", prodotures);
     }
 }

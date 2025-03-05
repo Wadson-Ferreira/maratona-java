@@ -41,9 +41,14 @@ public class ProdutorServico {
         ProdutorRepositorio.mostrarTypeScrollTrabalhando();
     }
 
+    public static List<Produtor> procurarPorNomeEAtualizarToUpperCase (String nome) {
+        return ProdutorRepositorio.procurarPorNomeEAtualizarToUpperCase(nome);
+    }
+
     private static void validandoID(Integer id) {
         if(id == null || id <= 0){
             throw new IllegalArgumentException("Valor de id invalido, o valor deve ser maior que 0");
         }
     }
+
 }

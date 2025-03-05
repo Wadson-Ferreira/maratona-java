@@ -148,6 +148,30 @@ public class ProdutorRepositorio {
         }
 
     }
+
+    public static List<Produtor> procurarPorNomeEAtualizarToUpperCase (String nome) {
+        log.info("Buscando Produtores pelo nome: '{}'", nome);
+        String sql = "SELECT * FROM anime_loja.produtor where nome like '%s';".formatted("%" + nome + "%");
+        List<Produtor> produtores = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                rs.updateString("nome", rs.getString("nome").toUpperCase());
+                rs.updateRow();
+                Produtor produtor = Produtor
+                        .builder()
+                        .id(rs.getInt("idProdutor"))
+                        .nome(rs.getString("nome"))
+                        .build();
+                produtores.add(produtor);
+            }
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
+        }
+        return produtores;
+    }
 }
 
 
