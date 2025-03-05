@@ -45,6 +45,14 @@ public class ProdutorServico {
         return ProdutorRepositorio.procurarPorNomeEAtualizarToUpperCase(nome);
     }
 
+    public static List<Produtor> procurarPorNomeEInserirNaoEncontrado (String nome) {
+        return ProdutorRepositorio.procurarPorNomeEInserirNaoEncontrado(nome);
+    }
+
+    public static void procurarPorNomeEDeletar (String nome) {
+        ProdutorRepositorio.procurarPorNomeEDeletar(nome);
+    }
+
     private static void validandoID(Integer id) {
         if(id == null || id <= 0){
             throw new IllegalArgumentException("Valor de id invalido, o valor deve ser maior que 0");

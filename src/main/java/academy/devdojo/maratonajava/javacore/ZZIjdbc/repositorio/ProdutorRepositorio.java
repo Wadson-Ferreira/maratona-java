@@ -66,7 +66,7 @@ public class ProdutorRepositorio {
         return produtores;
     }
 
-    public static void metaDadosDoProdutor()  {
+    public static void metaDadosDoProdutor() {
         log.info("Mostrando metadados dados do Produtor");
         String sql = "SELECT * FROM anime_loja.produtor";
         try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement();
@@ -86,27 +86,27 @@ public class ProdutorRepositorio {
         }
     }
 
-    public static void driverMetaDadosDoProdutor()  {
+    public static void driverMetaDadosDoProdutor() {
         log.info("Mostrando metadados dados do Produtor");
         try (Connection conn = ConnectionFactory.getConnection()) {
             DatabaseMetaData dbMetaData = conn.getMetaData();
-            if(dbMetaData.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY)) {
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY)) {
                 log.info("Suporta TYPE_FORWARD_ONLY");
-                if(dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)){
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
                     log.info("E Suporta CONCUR_UPDATABLE");
                 }
             }
 
-            if(dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)) {
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)) {
                 log.info("Suporta TYPE_SCROLL_INSENSITIVE");
-                if(dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)){
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
                     log.info("E Suporta CONCUR_UPDATABLE");
                 }
             }
 
-            if(dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE)) {
+            if (dbMetaData.supportsResultSetType(ResultSet.TYPE_SCROLL_SENSITIVE)) {
                 log.info("Suporta TYPE_SCROLL_SENSITIVE");
-                if(dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)){
+                if (dbMetaData.supportsResultSetConcurrency(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
                     log.info("E Suporta CONCUR_UPDATABLE");
                 }
             }
@@ -115,11 +115,11 @@ public class ProdutorRepositorio {
         }
     }
 
-    public static void mostrarTypeScrollTrabalhando () {
+    public static void mostrarTypeScrollTrabalhando() {
         String sql = "SELECT * FROM anime_loja.produtor;";
         try (Connection conn = ConnectionFactory.getConnection();
              Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-             ResultSet rs = stmt.executeQuery(sql)){
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             log.info("Ultima linha? '{}'", rs.last());
             log.info("Número da linha: '{}'", rs.getRow());
@@ -149,7 +149,7 @@ public class ProdutorRepositorio {
 
     }
 
-    public static List<Produtor> procurarPorNomeEAtualizarToUpperCase (String nome) {
+    public static List<Produtor> procurarPorNomeEAtualizarToUpperCase(String nome) {
         log.info("Buscando Produtores pelo nome: '{}'", nome);
         String sql = "SELECT * FROM anime_loja.produtor where nome like '%s';".formatted("%" + nome + "%");
         List<Produtor> produtores = new ArrayList<>();
@@ -171,6 +171,53 @@ public class ProdutorRepositorio {
             log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
         }
         return produtores;
+    }
+
+    public static List<Produtor> procurarPorNomeEInserirNaoEncontrado(String nome) {
+        log.info("Inserindo produtor pelo nome: '{}'", nome);
+        String sql = "SELECT * FROM anime_loja.produtor where nome like '%%%s%%';".formatted(nome);
+        List<Produtor> produtores = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) return produtores;
+
+            inserirNovoProdutor(nome, rs);
+
+            produtores.add(getProdutor(rs));
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
+        }
+        return produtores;
+    }
+
+    public static void procurarPorNomeEDeletar(String nome) {
+        log.info("Buscando Produtores pelo nome: '{}'", nome);
+        String sql = "SELECT * FROM anime_loja.produtor where nome like '%%%s%%';".formatted(nome);
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                log.info("Deletando '{}'", rs.getString("nome"));
+                rs.deleteRow();
+            }
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
+        }
+    }
+
+    private static Produtor getProdutor(ResultSet rs) throws SQLException {
+        rs.beforeFirst();
+        rs.next();
+        return Produtor.builder().id(rs.getInt("idProdutor")).nome(rs.getString("nome")).build();
+    }
+
+    private static void inserirNovoProdutor(String nome, ResultSet rs) throws SQLException {
+        rs.moveToInsertRow();
+        rs.updateString("nome", nome);
+        rs.insertRow();
     }
 }
 
