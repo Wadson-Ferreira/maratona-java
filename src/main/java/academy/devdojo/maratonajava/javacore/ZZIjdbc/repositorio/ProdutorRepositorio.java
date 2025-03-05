@@ -40,6 +40,25 @@ public class ProdutorRepositorio {
         }
     }
 
+    public static void atualizarPreparedStatement (Produtor produtor) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = preparedStatementAtualizar(conn,produtor)) {
+            int linhasAfetadas = ps.executeUpdate();
+            log.info("atualizando produtor id: '{}', linhas afetadas '{}' ", produtor.getId(), linhasAfetadas);
+        } catch (SQLException e) {
+            log.error("Erro ao atualizar produtor '{}'", produtor.getId(), e);
+        }
+    }
+
+    private static PreparedStatement preparedStatementAtualizar(Connection conn, Produtor produtor) throws SQLException {
+        String sql = "UPDATE `anime_loja`.`produtor` SET `nome` = ?  WHERE (`idProdutor` = ?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, produtor.getNome());
+        ps.setInt(2, produtor.getId());
+        return ps;
+    }
+
+
     public static List<Produtor> procurarTodos() {
         log.info("Buscando todos os Produtores");
         return procurarPorNome("");
@@ -210,10 +229,9 @@ public class ProdutorRepositorio {
 
     public static List<Produtor> procurarPorNomePreparedStatement(String nome) {
         log.info("Buscando Produtores pelo nome: '{}'", nome);
-        String sql = "SELECT * FROM anime_loja.produtor where nome like ?;";
         List<Produtor> produtores = new ArrayList<>();
         try (Connection conn = ConnectionFactory.getConnection();
-             PreparedStatement ps = createdPreparedStatement(conn,sql,nome);
+             PreparedStatement ps = preparedStatementProcurarPorNome(conn, nome);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Produtor produtor = Produtor
@@ -230,11 +248,11 @@ public class ProdutorRepositorio {
         return produtores;
     }
 
-    private static PreparedStatement createdPreparedStatement(Connection conn, String sql, String nome) throws SQLException {
+    private static PreparedStatement preparedStatementProcurarPorNome(Connection conn, String nome) throws SQLException {
+        String sql = "SELECT * FROM anime_loja.produtor where nome like ?;";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, String.format("%%%s%%", nome));
         return ps;
-
     }
 
     private static Produtor getProdutor(ResultSet rs) throws SQLException {

@@ -10,7 +10,7 @@ import java.util.List;
 public class ConnectionFactoryTest01 {
     public static void main(String[] args) {
 //        Produtor produtor = Produtor.builder().nome("Studio Deen").build();
-//        Produtor atualizarProdutor = Produtor.builder().id(1).nome("MADHOUSE").build();
+        Produtor atualizarProdutor = Produtor.builder().id(1).nome("madhouse").build();
 //        ProdutorServico.salvar(produtor);
 //        ProdutorServico.deletar(9);
 //        ProdutorServico.atualizar(atualizarProdutor);
@@ -22,8 +22,10 @@ public class ConnectionFactoryTest01 {
 //        ProdutorServico.driverMetaDadosDoProdutor();
 //        List<Produtor> prodotures = ProdutorServico.procurarPorNomeEInserirNaoEncontrado("A-1 pictures");
 
-        List<Produtor> produtores = ProdutorServico.procurarPorNomePreparedStatement("Bo");
-        log.info("Produtor encontrado pelo nome: '{}'", produtores);
+//        List<Produtor> produtores = ProdutorServico.procurarPorNomePreparedStatement("Bo");
+//        log.info("Produtor encontrado pelo nome: '{}'", produtores);
+
+        ProdutorServico.atualizarPreparedStatement(atualizarProdutor);
 
     }
 }

@@ -21,6 +21,11 @@ public class ProdutorServico {
         ProdutorRepositorio.atualizar(produtor);
     }
 
+    public static void atualizarPreparedStatement (Produtor produtor) {
+        validandoID(produtor.getId());
+        ProdutorRepositorio.atualizarPreparedStatement(produtor);
+    }
+
     public static List<Produtor> procurarTodos () {
         return ProdutorRepositorio.procurarTodos();
     }
