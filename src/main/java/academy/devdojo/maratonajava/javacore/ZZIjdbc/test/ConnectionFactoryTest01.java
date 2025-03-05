@@ -21,8 +21,9 @@ public class ConnectionFactoryTest01 {
 //        ProdutorServico.metadaDadosProdutor();
 //        ProdutorServico.driverMetaDadosDoProdutor();
 //        List<Produtor> prodotures = ProdutorServico.procurarPorNomeEInserirNaoEncontrado("A-1 pictures");
-//        log.info("Inserindo novo Produtor pelo nome: '{}'", prodotures);
 
-        ProdutorServico.procurarPorNomeEDeletar("A-1 pictures");
+        List<Produtor> produtores = ProdutorServico.procurarPorNomePreparedStatement("Bo");
+        log.info("Produtor encontrado pelo nome: '{}'", produtores);
+
     }
 }

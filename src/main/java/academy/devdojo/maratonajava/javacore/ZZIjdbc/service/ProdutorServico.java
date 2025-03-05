@@ -29,6 +29,10 @@ public class ProdutorServico {
         return ProdutorRepositorio.procurarPorNome(nome);
     }
 
+    public static List<Produtor> procurarPorNomePreparedStatement (String nome) {
+        return ProdutorRepositorio.procurarPorNomePreparedStatement(nome);
+    }
+
     public static void metadaDadosProdutor () {
         ProdutorRepositorio.metaDadosDoProdutor();
     }

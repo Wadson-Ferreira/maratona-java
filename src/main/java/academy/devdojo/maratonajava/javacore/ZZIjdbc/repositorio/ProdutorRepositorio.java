@@ -208,6 +208,35 @@ public class ProdutorRepositorio {
         }
     }
 
+    public static List<Produtor> procurarPorNomePreparedStatement(String nome) {
+        log.info("Buscando Produtores pelo nome: '{}'", nome);
+        String sql = "SELECT * FROM anime_loja.produtor where nome like ?;";
+        List<Produtor> produtores = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createdPreparedStatement(conn,sql,nome);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Produtor produtor = Produtor
+                        .builder()
+                        .id(rs.getInt("idProdutor"))
+                        .nome(rs.getString("nome"))
+                        .build();
+                produtores.add(produtor);
+            }
+
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
+        }
+        return produtores;
+    }
+
+    private static PreparedStatement createdPreparedStatement(Connection conn, String sql, String nome) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, String.format("%%%s%%", nome));
+        return ps;
+
+    }
+
     private static Produtor getProdutor(ResultSet rs) throws SQLException {
         rs.beforeFirst();
         rs.next();
