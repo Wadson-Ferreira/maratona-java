@@ -34,6 +34,10 @@ public class ProdutorServico {
         return ProdutorRepositorio.procurarPorNome(nome);
     }
 
+    public static List<Produtor> procurarPorNomeCallableStatement (String nome) {
+        return ProdutorRepositorio.procurarPorNomeCallableStatement(nome);
+    }
+
     public static List<Produtor> procurarPorNomePreparedStatement (String nome) {
         return ProdutorRepositorio.procurarPorNomePreparedStatement(nome);
     }
