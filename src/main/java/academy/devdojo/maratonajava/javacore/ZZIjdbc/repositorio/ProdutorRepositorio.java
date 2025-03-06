@@ -58,7 +58,6 @@ public class ProdutorRepositorio {
         return ps;
     }
 
-
     public static List<Produtor> procurarTodos() {
         log.info("Buscando todos os Produtores");
         return procurarPorNome("");
