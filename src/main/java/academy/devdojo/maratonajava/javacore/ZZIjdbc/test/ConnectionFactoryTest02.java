@@ -9,7 +9,12 @@ import java.util.List;
 @Log4j2
 public class ConnectionFactoryTest02 {
     public static void main(String[] args) {
-        List<Produtor> produtor = ProdutorServicoRowSet.procurarPorNomeJdbcRowSet("NHK");
+        Produtor atualizarProdutor = Produtor.builder().id(1).nome("MADHOUSE").build();
+        ProdutorServicoRowSet.atualizarJdbcRowSet(atualizarProdutor);
+
+        log.info("-------------------");
+
+        List<Produtor> produtor = ProdutorServicoRowSet.procurarPorNomeJdbcRowSet("");
         log.info(produtor);
     }
 }

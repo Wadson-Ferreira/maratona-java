@@ -2,6 +2,7 @@ package academy.devdojo.maratonajava.javacore.ZZIjdbc.repositorio;
 
 import academy.devdojo.maratonajava.javacore.ZZIjdbc.conn.ConnectionFactory;
 import academy.devdojo.maratonajava.javacore.ZZIjdbc.dominio.Produtor;
+import academy.devdojo.maratonajava.javacore.ZZIjdbc.linister.CustomRowSetListener;
 import lombok.extern.log4j.Log4j2;
 
 import javax.sql.rowset.JdbcRowSet;
@@ -18,6 +19,7 @@ public class RepositorioProdutorRowSet {
         String sql = "SELECT * FROM anime_loja.produtor where nome like ?;";
         List<Produtor> produtores = new ArrayList<>();
         try (JdbcRowSet jrs = ConnectionFactory.getJdbcRowSet()) {
+            jrs.addRowSetListener(new CustomRowSetListener());
             jrs.setCommand(sql);
             jrs.setString(1, String.format("%%%s%%", nome));
             jrs.execute();
@@ -28,6 +30,39 @@ public class RepositorioProdutorRowSet {
             log.error("Erro ao buscar produtor pelo nome: '{}' ", nome, e);
         }
         return produtores;
+    }
+
+//    public static void atualizarJdbcRowSet(Produtor produtor) {
+//
+//        log.info("Atualizando Produtor: '{}'", produtor.getNome());
+//
+//        String sql = "UPDATE `anime_loja`.`produtor` SET `nome` = ?  WHERE (`idProdutor` = ?);";
+//        try (JdbcRowSet jrs = ConnectionFactory.getJdbcRowSet()) {
+//            jrs.setCommand(sql);
+//            jrs.setString(1, produtor.getNome());
+//            jrs.setInt(2, produtor.getId());
+//            jrs.execute();
+//        } catch (SQLException e) {
+//            log.error("Erro ao atualizar produtor: '{}' ", produtor.getNome(), e);
+//        }
+//    }
+
+    public static void atualizarJdbcRowSet(Produtor produtor) {
+
+        log.info("Atualizando nome do Produtor id: '{}' para: '{}'", produtor.getId(), produtor.getNome());
+
+        String sql = "SELECT * FROM anime_loja.produtor WHERE (`idProdutor` = ?);";
+        try (JdbcRowSet jrs = ConnectionFactory.getJdbcRowSet()) {
+            jrs.addRowSetListener(new CustomRowSetListener());
+            jrs.setCommand(sql);
+            jrs.setInt(1, produtor.getId());
+            jrs.execute();
+            if(!jrs.next()) return;
+            jrs.updateString("nome", produtor.getNome());
+            jrs.updateRow();
+        } catch (SQLException e) {
+            log.error("Erro ao atualizar produtor: '{}' ", produtor.getNome(), e);
+        }
     }
 
     private static Produtor getProdutor(JdbcRowSet jrs) throws SQLException {

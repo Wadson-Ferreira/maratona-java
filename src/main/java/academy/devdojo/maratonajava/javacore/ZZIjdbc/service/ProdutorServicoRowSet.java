@@ -6,7 +6,12 @@ import academy.devdojo.maratonajava.javacore.ZZIjdbc.repositorio.RepositorioProd
 import java.util.List;
 
 public class ProdutorServicoRowSet {
+
     public static List<Produtor> procurarPorNomeJdbcRowSet(String nome) {
         return RepositorioProdutorRowSet.procurarPorNomeJdbcRowSet(nome);
+    }
+
+    public static void atualizarJdbcRowSet(Produtor produtor) {
+        RepositorioProdutorRowSet.atualizarJdbcRowSet(produtor);
     }
 }
