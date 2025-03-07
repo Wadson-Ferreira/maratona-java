@@ -14,4 +14,8 @@ public class ProdutorServicoRowSet {
     public static void atualizarJdbcRowSet(Produtor produtor) {
         RepositorioProdutorRowSet.atualizarJdbcRowSet(produtor);
     }
+
+    public static void atualizarCachedRowSet(Produtor produtor) {
+        RepositorioProdutorRowSet.atualizarCachedRowSet(produtor);
+    }
 }

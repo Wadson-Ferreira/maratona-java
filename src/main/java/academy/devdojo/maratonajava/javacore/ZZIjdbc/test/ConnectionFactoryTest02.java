@@ -10,11 +10,11 @@ import java.util.List;
 public class ConnectionFactoryTest02 {
     public static void main(String[] args) {
         Produtor atualizarProdutor = Produtor.builder().id(1).nome("MADHOUSE").build();
-        ProdutorServicoRowSet.atualizarJdbcRowSet(atualizarProdutor);
+        ProdutorServicoRowSet.atualizarCachedRowSet(atualizarProdutor);
 
-        log.info("-------------------");
-
-        List<Produtor> produtor = ProdutorServicoRowSet.procurarPorNomeJdbcRowSet("");
-        log.info(produtor);
+//        log.info("-------------------");
+//
+//        List<Produtor> produtor = ProdutorServicoRowSet.procurarPorNomeJdbcRowSet("");
+//        log.info(produtor);
     }
 }
