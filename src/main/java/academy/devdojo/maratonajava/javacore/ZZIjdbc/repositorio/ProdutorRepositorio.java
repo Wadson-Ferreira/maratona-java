@@ -20,6 +20,36 @@ public class ProdutorRepositorio {
         }
     }
 
+    public static void salvarTransacao (List<Produtor> produtores ) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            conn.setAutoCommit(false);
+            preparedStatementSalvarTransacao(conn, produtores);
+            conn.commit();
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            log.error("Erro ao atualizar produtores '{}'", produtores, e);
+        }
+    }
+
+    private static void preparedStatementSalvarTransacao (Connection conn, List<Produtor> produtores) throws SQLException {
+        String sql = "INSERT INTO `anime_loja`.`produtor` (`nome`) VALUES ( ? );";
+        boolean shouldRollBack = false;
+        for (Produtor p: produtores) {
+            try(PreparedStatement ps = conn.prepareStatement(sql)) {
+                log.info("Salvando produtor '{}'", p.getNome());
+                ps.setString(1, p.getNome());
+                ps.execute();
+            }catch (SQLException e) {
+                e.printStackTrace();
+                shouldRollBack = true;
+            }
+        }
+        if (shouldRollBack) {
+            log.warn("A transação será revertida");
+            conn.rollback();
+        }
+    }
+
     public static void deletar(int id) {
         String sql = "DELETE FROM `anime_loja`.`produtor` WHERE (`idProdutor` = '%d');".formatted(id);
         try (Connection conn = ConnectionFactory.getConnection(); Statement stmt = conn.createStatement()) {

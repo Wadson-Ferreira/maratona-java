@@ -11,7 +11,12 @@ public class ProdutorServico {
         ProdutorRepositorio.salvar(produtor);
     }
 
-    public static void deletar(Integer id) {
+    public static void salvarTransacao (List<Produtor> produtores ) {
+        ProdutorRepositorio.salvarTransacao(produtores);
+    }
+
+
+        public static void deletar(Integer id) {
         validandoID(id);
         ProdutorRepositorio.deletar(id);
     }
