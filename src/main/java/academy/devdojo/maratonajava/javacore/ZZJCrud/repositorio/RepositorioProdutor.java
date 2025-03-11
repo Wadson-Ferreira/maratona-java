@@ -4,10 +4,7 @@ import academy.devdojo.maratonajava.javacore.ZZJCrud.conn.ConnectionFactory;
 import academy.devdojo.maratonajava.javacore.ZZJCrud.dominio.Produtor;
 import lombok.extern.log4j.Log4j2;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +50,22 @@ public class RepositorioProdutor {
         return ps;
     }
 
+    public static void salvar(Produtor produtor) {
+        log.info("Salvando Produtor '{}'", produtor);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createPreparedStatementSalvar(conn, produtor)) {
+            ps.execute();
+        } catch (SQLException e) {
+            log.error("Erro ao salvar produtor '{}'", produtor, e);
+        }
+    }
+
+    private static PreparedStatement createPreparedStatementSalvar(Connection conn, Produtor produtor) throws SQLException {
+        String sql = "INSERT INTO `anime_loja`.`produtor` (`nome`) VALUES (?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, produtor.getNome());
+        return ps;
+    }
 
     private static Produtor getProdutor(ResultSet rs) throws SQLException {
         return Produtor.builder().idProdutor(rs.getInt("idProdutor")).nome(rs.getString("nome")).build();
