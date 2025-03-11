@@ -22,6 +22,7 @@ public class CrudTest01 {
         System.out.println("1. Procurar por produtor");
         System.out.println("2. Deletar produtor");
         System.out.println("3. Salvar um novo produtor");
+        System.out.println("4. Atualizar produtor");
         System.out.println("0. Para sair");
     }
 }

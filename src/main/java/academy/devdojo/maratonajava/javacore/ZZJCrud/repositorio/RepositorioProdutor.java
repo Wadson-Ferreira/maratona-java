@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 public class RepositorioProdutor {
@@ -33,6 +34,26 @@ public class RepositorioProdutor {
         return ps;
     }
 
+    public static Optional<Produtor> procurarPorId(Integer id) {
+        log.info("Buscando Produtores pelo id: '{}'", id);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createPreparedStatementProcurarPorId(conn, id);
+             ResultSet rs = ps.executeQuery()) {
+            if (!rs.next()) return Optional.empty();
+            return Optional.of(getProdutor(rs));
+        } catch (SQLException e) {
+            log.error("Erro ao buscar produtor pelo Id: '{}' ", id, e);
+        }
+        return Optional.empty();
+    }
+
+    private static PreparedStatement createPreparedStatementProcurarPorId(Connection conn, Integer id) throws SQLException {
+        String sql = "SELECT * FROM anime_loja.produtor where idProdutor = ?;";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps;
+    }
+
     public static void deletar(int id) {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = createPreparedStatementDeletar(conn, id)) {
@@ -51,7 +72,7 @@ public class RepositorioProdutor {
     }
 
     public static void salvar(Produtor produtor) {
-        log.info("Salvando Produtor '{}'", produtor);
+        log.info("Salvando Produtor '{}'", produtor.getNome());
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement ps = createPreparedStatementSalvar(conn, produtor)) {
             ps.execute();
@@ -64,6 +85,24 @@ public class RepositorioProdutor {
         String sql = "INSERT INTO `anime_loja`.`produtor` (`nome`) VALUES (?);";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, produtor.getNome());
+        return ps;
+    }
+
+    public static void atualizar (Produtor produtor) {
+        log.info("Atualizando Produtor '{}'", produtor);
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createPreparedStatementAtualizar(conn,produtor)) {
+            ps.execute();
+        } catch (SQLException e) {
+            log.error("Erro ao atualizar produtor '{}'", produtor.getIdProdutor(), e);
+        }
+    }
+
+    private static PreparedStatement createPreparedStatementAtualizar(Connection conn, Produtor produtor) throws SQLException {
+        String sql = "UPDATE `anime_loja`.`produtor` SET `nome` = ?  WHERE (`idProdutor` = ?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, produtor.getNome());
+        ps.setInt(2, produtor.getIdProdutor());
         return ps;
     }
 

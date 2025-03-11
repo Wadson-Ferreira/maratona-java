@@ -4,6 +4,7 @@ import academy.devdojo.maratonajava.javacore.ZZJCrud.dominio.Produtor;
 import academy.devdojo.maratonajava.javacore.ZZJCrud.repositorio.RepositorioProdutor;
 
 import javax.swing.*;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ProdutorServico {
@@ -14,6 +15,7 @@ public class ProdutorServico {
             case 1 -> procurarPorNome();
             case 2 -> deletar();
             case 3 -> salvar();
+            case 4 -> atualizar();
             default -> throw new IllegalArgumentException("Opção inválida!");
         }
     }
@@ -43,6 +45,29 @@ public class ProdutorServico {
                 .showConfirmDialog(null, "Deseja Salvar o Produtor: %s?"
                         .formatted(produtor.getNome()), "Salvar", JOptionPane.YES_NO_OPTION);
         if (confirmacao == 0) RepositorioProdutor.salvar(produtor);
+    }
+
+    private static void atualizar(){
+        System.out.println("Escreva o ID do produtor que deseja atualizar: ");
+        Optional<Produtor> produtorOptional = RepositorioProdutor.procurarPorId(Integer.parseInt(SCANNER.nextLine()));
+        if (produtorOptional.isEmpty()){
+            System.out.println("Produtor não encontrado.");
+            return;
+        }
+        Produtor produtorBancoDeDados = produtorOptional.get();
+        System.out.println("Produtor encontrado com sucesso: " + produtorBancoDeDados);
+        System.out.println("Digite o novo nome ou pressione Enter para manter o atual");
+        String nome = SCANNER.nextLine();
+        nome = nome.isEmpty() ? produtorBancoDeDados.getNome() : nome;
+
+        Produtor produtorParaAtualizar = Produtor.builder()
+                .idProdutor(produtorBancoDeDados.getIdProdutor())
+                .nome(nome)
+                .build();
+
+        RepositorioProdutor.atualizar(produtorParaAtualizar);
+
+
     }
 }
 
