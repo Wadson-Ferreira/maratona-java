@@ -36,6 +36,24 @@ public class RepositorioProdutor {
         return ps;
     }
 
+    public static void deletar(int id) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement ps = createPreparedStatementDeletar(conn, id)) {
+            ps.execute();
+            log.info("Deletando produtor '{}' do banco de dados", id);
+        } catch (SQLException e) {
+            log.error("Erro ao deletar produtor '{}'", id, e);
+        }
+    }
+
+    private static PreparedStatement createPreparedStatementDeletar(Connection conn, Integer id) throws SQLException {
+        String sql = "DELETE FROM `anime_loja`.`produtor` WHERE (`idProdutor` = ?);";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        return ps;
+    }
+
+
     private static Produtor getProdutor(ResultSet rs) throws SQLException {
         return Produtor.builder().idProdutor(rs.getInt("idProdutor")).nome(rs.getString("nome")).build();
     }
