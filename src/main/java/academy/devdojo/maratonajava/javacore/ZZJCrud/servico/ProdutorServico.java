@@ -16,6 +16,7 @@ public class ProdutorServico {
             case 2 -> deletar();
             case 3 -> salvar();
             case 4 -> atualizar();
+            case 9 -> {}
             default -> throw new IllegalArgumentException("Opção inválida!");
         }
     }

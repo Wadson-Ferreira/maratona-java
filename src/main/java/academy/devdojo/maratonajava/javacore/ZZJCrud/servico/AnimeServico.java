@@ -16,6 +16,7 @@ public class AnimeServico {
             case 2 -> deletar();
             case 3 -> salvar();
             case 4 -> atualizar();
+            case 9 -> {}
             default -> throw new IllegalArgumentException("Opção inválida!");
         }
     }
@@ -24,7 +25,8 @@ public class AnimeServico {
         System.out.println("Digite o nome do anime ou aperte 'Enter' para listar todos: ");
         String nome = SCANNER.nextLine();
         RepositorioAnime.procurarPorNome(nome)
-                .forEach(a -> System.out.printf("[Id: %d] - %s%n", a.getIdAnime(), a.getNomeAnime()));
+                .forEach(a -> System.out.printf("[Id: %d] - %s - [Episodios: %d] - [Produtor: %s]%n",
+                        a.getIdAnime(), a.getNomeAnime(),a.getEpisodios(), a.getProdutor().getNome()));
     }
 
     private static void deletar() {

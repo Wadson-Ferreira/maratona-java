@@ -122,14 +122,13 @@ public class RepositorioAnime {
     }
 
     private static Anime getAnime(ResultSet rs) throws SQLException {
-        Produtor produtor = Produtor
-                .builder()
+        Produtor produtor = Produtor.builder()
+                .idProdutor(rs.getInt("produtor_id"))
                 .nome(rs.getString("nomeProdutor"))
-                .idProdutor(rs.getInt("idProdutor"))
                 .build();
         return Anime.builder()
                 .idAnime(rs.getInt("idAnime"))
-                .nomeAnime(rs.getString("nome"))
+                .nomeAnime(rs.getString("nomeAnime"))
                 .episodios(rs.getInt("episodios"))
                 .produtor(produtor)
                 .build();
