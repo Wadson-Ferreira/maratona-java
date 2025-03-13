@@ -7,7 +7,7 @@ import lombok.Value;
 @Value
 public class Anime {
     Integer idAnime;
-    String nome;
+    String nomeAnime;
     int episodios;
     Produtor produtor;
 }

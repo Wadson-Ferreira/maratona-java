@@ -31,10 +31,9 @@ public class ProdutorServico {
         procurarPorNome();
         System.out.println("Digite o ID do produtor que deseja deletar: ");
         int id = Integer.parseInt(SCANNER.nextLine());
-        int confirmacao = JOptionPane
-                .showConfirmDialog(null, "Tem certeza que deseja deletar o ID %d? "
-                        .formatted(id), "Deletar", JOptionPane.YES_NO_OPTION);
-        if (confirmacao == 0) RepositorioProdutor.deletar(id);
+        System.out.printf("Tem certeza que deseja deletar o ID %d? S/N? %n", id);
+        String confirmacao = SCANNER.nextLine();
+        if ("s".equalsIgnoreCase(confirmacao)) RepositorioProdutor.deletar(id);
     }
 
     private static void salvar() {
